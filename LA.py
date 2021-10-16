@@ -114,9 +114,10 @@ def scalar_matrix_Multi(matrix_A: list[list[float]], scalar_A: float) -> list[li
     """Multiplies the input matrix and scalar together.
 
     Overwrite each element in matrix_A with the corresponding element of the
-    multiplication of the input matrix and scalar. Achieves this by using two for
-    loops and calling the function scalar_vector_Multi inside the last loop and then
-    putting the result into matrix_A.
+    multiplication of the input matrix and scalar. Achieves this by using a for
+    loop and the function scalar_vector_Multi to multiply each column in matrix_A
+    to the input scalar and then overwrite the old column element with the newly
+    calculated column elements for matrix_A.
 
     Args:
         matrix_A: A matrix stored as a list of lists.
@@ -126,8 +127,7 @@ def scalar_matrix_Multi(matrix_A: list[list[float]], scalar_A: float) -> list[li
         The multiplication of the input matrix and scalar stored as a list of lists..
     """
     for column in range(len(matrix_A)):
-        for row in range(len(matrix_A[0])):
-            matrix_A[column][row] = (matrix_A[column][row] * scalar_A)
+        matrix_A[column] = scalar_vector_Multi(matrix_A[column], scalar_A)
 
     return matrix_A
 
@@ -140,7 +140,7 @@ def matrix_matrix_Add(matrix_A: list[list[float]], matrix_B: list[list[float]]) 
     Use a if-elif-else statement to check the dimensions and number of elements
     to see if the matrices can be added. Then we overwrite each element in matrix_A
     with the corresponding element of the sum of the input matrices. Achieves this
-    by using two for loops over the indices of matrix_A.
+    by using a for loop and the function add_vectors.
 
     Args:
         matrix_A: A matrix stored as a list of lists.
@@ -161,16 +161,15 @@ def matrix_matrix_Add(matrix_A: list[list[float]], matrix_B: list[list[float]]) 
         matrix_A = "Error: Length of columns are not the same"
 
     elif (len(matrix_A[0]) != len(
-            matrix_B[0])):  # Added print statement for when rows of both matrices are not the same.
+            matrix_B[0])):  
         matrix_A = "Error: Length of rows are not the same"
 
     elif (max_number_A != max_number_B):
-        matrix_A = "Error: Number of elements are not the same"  # Changed print statement from print("Error: Number of rows are not the same").
+        matrix_A = "Error: Number of elements are not the same"  
 
     else:
         for column in range(len(matrix_A)):
-            for row in range(len(matrix_A[0])):
-                matrix_A[column][row] = (matrix_A[column][row] + matrix_B[column][row])
+            matrix_A[column] = add_vectors(matrix_A[column], matrix_B[column]
 
     return matrix_A
 
@@ -203,7 +202,7 @@ def matrix_vector_Multi(matrix_A: list[list[float]], vector_A: list[float]) -> l
     for index in range(len(vector_A)):
         result_Vector[index] = result_Vector.append(0)
 
-    if (len(matrix_A) != len(vector_A)):  # Added a if statement to check if the columns from matrix_A are the same as the rows in vector_A.
+    if (len(matrix_A) != len(vector_A)):  
         result_Vector = "Error: The dimensions are not compatible"
 
     else:
