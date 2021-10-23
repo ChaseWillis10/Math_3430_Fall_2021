@@ -1,5 +1,5 @@
 
-
+#Homework 3
 """
 This homework is due on 10/15/2021 by 11:59pm. 
 
@@ -246,3 +246,186 @@ def matrix_matrix_Multi(matrix_A: list[list[float]], matrix_B: list[list[float]]
             result_Matrix[i] = matrix_vector_Multi(matrix_A, matrix_B[i])
 
     return result_Matrix
+                                           
+                                           
+# Homework 4
+"""
+This assignment is due by 11:59pm on 10/22/2021. 
+
+For this assignment you will be adding functinos to the LA.py script from HW03.
+All functions must satisfy the same requirements as in HW03. The functions you
+will need to add are
+
+#1) A function which takes a scalar as it's input and returns it's absolute
+value. Note that this function must be able to take both real numbers and
+complex numbers as input!!!
+
+#2) A function which takes the as it's arguments
+
+1) A vector stored as a list.
+
+2) A float valued scalar, set to default as 2. 
+
+and returns the p-norm of the input vector. Which p-norm must be determined using
+the float valued scalar input. If no argument is given, it should default to
+2. 
+
+#3) A function which takes as it's argument a vector stored as a list and
+returns the infinity norm of the input vector.
+
+#4) A function which takes as it's arguments
+
+1) A vector stored as a list.
+
+2) An float valued scalar, set to default as 2.
+
+3) A boolean value, set to default as False.
+
+The function will return the p-norm of the input vector. If the boolean value is
+given as True, the function will return the infinity norm of the input vector.
+Otherwise it will return the p-norm of the vector corresponding to the float 
+scalar argument. This function must use the functions from problem #2 and
+problem #3 to earn credit. 
+
+#5) A function which takes as it's arguments two vectors, stored as lists. This
+function then returns the inner product of these vectors. Your function must be
+able to handle complex numbers!
+"""
+
+
+# Problem #1
+def abs(scalar_A: complex) -> float:
+    """Find Absolute Value
+
+        Create a result variable that is a float type. It will then convert our input scalar
+        to a complex form. It will then take the real and the imaginary part of our scalar
+        and square both then add them together. It will then store the value we just got into
+        result then it will square root the result to get our absolute value. It then will
+        return our result.
+
+        Args:
+            scalar_A: Is a scalar that is either normal or complex.
+
+        Returns:
+            The absolute value of our input value scalar_A.
+
+        """
+    result: float = 0
+    scalar_A = complex(scalar_A)
+    result = scalar_A.real ** 2 + scalar_A.imag ** 2
+    result = result ** (1 / 2)
+
+    return result
+
+
+# Problem #2
+def p_Norm(vector_A: list[float], p: int = 2) -> float:
+    """Calculates the P-Norm
+
+        Creates a result variable that is float type that is equal to zero. It will then
+        take each element in our input vector and then raise it to the power of the absolute
+        value of our input p. It finds the absolute value of p by calling the function abs()
+        with p being the scalar for abs(). We will then add our element to the power of abs(p)
+        with our result variable and then overwrite the result variable with the new calculation.
+        It will continue to do this until it gets every element in our input vector. It achieves
+        this by using a for loop which grabs each element in our input vector. It will then create
+        a power variable which is a float type. The power variable will store the value we get
+        from calling our abs() function from Problem #1 with p being the scalar for the abs()
+        function. It will then overwrite result with the present result to the power of our power
+        variable. It will then return result.
+
+        Args:
+            vector_A: A vector stored as a list of floats.
+            p: A scalar stored as a int type with the default value of 2.
+
+        Returns:
+            The P-Norm of our input vector and input scalar.
+
+        """
+    result: float = 0
+    for element in vector_A:
+        result = result + element ** (abs(p))
+    power: float = abs(1 / p)
+    result = result ** (power)
+    return result
+
+
+# Problem #3
+def inf_Norm(vector_A: list[float]) -> float:
+    """Calculates the Infinity Norm
+
+        Create two variables result and compare that both will be float types. It will then
+        use a for loop to call each element in the input vector. It will then find the absolute
+        value of each element from the input vector it will find the absolute value by send each
+        element into the abs() function that we have created and store it into the compare variable.
+        It will then use a if statement to see if compare is greater the result. If compare is greater
+        then result it will then store the data in the compare variable to the result variable. If
+        compare is less then result then result stays the same. It will run the for loop and if statements
+        based of the number of elements in the input vector.
+
+        Args:
+            vector_A: A vector stored as a list of floats
+
+        Returns:
+            The infinity norm of our input vector
+
+        """
+    result: float = 0
+    compare: float = 0
+    for element in vector_A:
+        compare = abs(element)
+        if (compare > result):
+            result = compare
+    return result
+
+
+# Problem #4
+def p_inf_result(vector_A: list[float], p: int = 2, boolean: bool = False) -> float:
+    """Finds the P-Norm or Infinity Norm
+
+        Creates a result variable that is a float type. Then checks to see if our input
+        boolean is True. If it is true then result will then be override with the
+        infinity norm of our input vector by calling the inf_Norm() function. If the
+        boolean variable is False then result will be override with P-norm of our
+        vector input variable and p input variable. This is done by calling the
+        p-Norm function. It will then return the result.
+
+        Args:
+            vector_A: A vector stored as a list of floats
+            p: A scalar that is 2 by default.
+            boolean: A boolean statement that is false by default.
+
+        Returns:
+            The multiplication of the input matrices stored as a list of lists.
+
+        """
+    result: float = 0
+    if (boolean == True):
+        result = inf_Norm(vector_A)
+    else:
+        result = p_Norm(vector_A, p)
+    return result
+
+# Problem 5
+def inner_product_Result(vector_A, vector_B) -> complex:
+    """Calculates the Inner Product of two vectors
+
+        Creates a result variable that is a float type. Then runs a for loop that runs for
+        the length of vector_A input. Each time the for loop is ran result will be override
+        with result plus the multiplication of the elements in the two input vectors. We will
+        make sure each element that is called from the input vectors are complex. After the for
+        loop is over the result is returned.
+
+        Args:
+            vector_A: A vector stored as a list of complex and\or normal numbers.
+            vector_B: A vector stored as a list of complex and\or normal numbers.
+
+        Returns:
+            The inner product of our two input vectors.
+
+        """
+    result: float = 0
+    for element in range(len(vector_A)):
+        result = result + (complex(vector_A[element]) * complex(vector_B[element]))
+    return result
+          
