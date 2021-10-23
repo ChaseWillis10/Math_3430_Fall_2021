@@ -53,3 +53,47 @@ def test_matrix_matrix_Multi():
     matrix_04 = [[2, 4, 6], [3, 5, 7]]
     assert LA.matrix_matrix_Multi(matrix_01,matrix_02) == [[8, 12], [16, 24]]
     assert LA.matrix_matrix_Multi(matrix_03,matrix_04) == "Error: The dimensions are not compatible"
+
+    
+#Homework 4
+
+#Problem 1
+def test_abs():
+    scalar_1 = -2-2j
+    scalar_2 = -5
+    assert LA.abs(scalar_1) == (8**(.5))
+    assert LA.abs(scalar_2) == 5
+    
+#Problem 2
+def test_p_Norm():
+    vector_1 = [1,2,3]
+    vector_2 = [2,4,6]
+    p_1 = 3
+    assert LA.p_Norm(vector_1, p_1) == (36**(1/3))
+    assert LA.p_Norm(vector_2) == (56**(1/2))
+    
+#Problem 3
+def test_inf_Norm():
+    vector_1 = [1,-4,3,5,2]
+    vector_2 = [-10, 2, 9]
+    assert LA.inf_Norm(vector_1) == 5
+    assert LA.inf_Norm(vector_2) == 10
+    
+#Problem 4
+def test_p_inf_result():
+    vector_1 = [1,2,5,4]
+    vector_2 = [1,2,3]
+    p_1 = 5
+    boolean_1 = True
+    assert LA.p_inf_result(vector_1, p_1, boolean_1) == 5
+    assert LA.p_inf_result(vector_2) == (14**(.5))
+    
+#Problem 5
+def test_inner_product_Result():
+    vector_1 = [1,2,3]
+    vector_2 = [1j,1+2j,2+3j]
+    vector_3 = [2,4,6]
+    vector_4 = [1,3,5]
+    assert LA.inner_product_Result(vector_1,vector_2) == 8+14j
+    assert LA.inner_product_Result(vector_3,vector_4) == 44
+    
