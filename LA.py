@@ -169,7 +169,7 @@ def matrix_matrix_Add(matrix_A: list[list[float]], matrix_B: list[list[float]]) 
 
     else:
         for column in range(len(matrix_A)):
-            matrix_A[column] = add_vectors(matrix_A[column], matrix_B[column]
+            matrix_A[column] = add_vectors(matrix_A[column], matrix_B[column])
 
     return matrix_A
 
