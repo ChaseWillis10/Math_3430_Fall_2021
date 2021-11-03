@@ -30,20 +30,20 @@ described in the algorithm.
 import LA
 
 #Problem 1
-def unstable_Gram_Schmidt(matrix_A):
+def unstable_Gram_Schmidt(matrix_A: list[list[complex]]) -> list[list[complex]]:
     Q = []
-    V = [[0,0,0],[0,0,0]]
+    V = [([0] * (len(matrix_A[0]))) for i in range(len(matrix_A))]
     R = [[0,0],[0,0]]
-    r = 0
-    scal = 0
+    r: int = 0
+    vector_Hold: list[float] = 0
 
     for column in range(len(matrix_A)):
         V[column] = matrix_A[column]
         for row in range(0, column):
             r = LA.inner_product_Result(Q[row], V[column])
             R[column][row] = r.real
-            scal = LA.scalar_vector_Multi(Q[row], -R[column][row])
-            V[column] = LA.add_vectors(V[column], scal)
+            vector_Hold = LA.scalar_vector_Multi(Q[row], -R[column][row])
+            V[column] = LA.add_vectors(V[column], vector_Hold)
         R[column][column] = LA.p_Norm((V[column]))
         Q.append(LA.scalar_vector_Multi((V[column]), (1 / R[column][column])))
     return [Q,R]
@@ -60,16 +60,16 @@ def stable_Gram_Schmidt(matrix_A):
     scal = 0
     for element in matrix_A:
         V.append(element)
-    for column in range(len(matrix_A)):
-        R[column][column] = LA.p_Norm((V[column]))
-        Q.append(LA.scalar_vector_Multi((V[column]), (1 / R[column][column])))
-        for row in range(column+1, len(matrix_A)):
-            print(row)
-            print(column)
-            r = LA.inner_product_Result(Q[row], V[column])
-            R[row][column] = r.real
-            scal = LA.scalar_vector_Multi(Q[row], -R[column][row])
-            V[column] = LA.add_vectors(V[column], scal)
+    for k in range(len(matrix_A)):
+        R[k][k] = LA.p_Norm((V[k]))
+        Q.append(LA.scalar_vector_Multi((V[k]), (1 / R[k][k])))
+        for j in range(k+1, len(matrix_A)):
+            print(j)
+            print(k)
+            r = LA.inner_product_Result(Q[k], V[j])
+            R[j][k] = r.real
+            scal = LA.scalar_vector_Multi(Q[k], -R[j][k])
+            V[j] = LA.add_vectors(V[j], scal)
     return [Q,R]
 
 print("Problem 2")
