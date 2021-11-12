@@ -122,9 +122,8 @@ def dia_column(matrix_A, col_Num):
         result[element] = matrix_A[col_Num][element+col_Num]
     return result
 
-def cal_V(sub_X):
-    e = [1,0,0]
+def cal_V(e_vector, sub_X):
     x_norm = LA.p_Norm(sub_X)
-    x_e_vector = LA.scalar_vector_Multi(x_norm, e)
+    x_e_vector = LA.scalar_vector_Multi(x_norm, e_vector)
     V = LA.add_vectors(x_e_vector, -sub_X)
     return V
