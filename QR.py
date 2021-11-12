@@ -75,3 +75,56 @@ def orthonormal_Conversion(matrix_A: list[list[complex]]) -> list[list[complex]]
         """
     Q: list[list[complex]] = stable_Gram_Schmidt(matrix_A)
     return Q[0]
+
+#Homework 7
+"""
+This assignment is due by 11:59pm on 11/12/2021. 
+
+For this assignment you will be updating the python script QR.py from the
+previous homework. As usual, all functions must satisfy the same requirements as in HW03. 
+
+You will import the LA.py script from HW03 and HW04. You must make use of those
+functions to implement the functions below. Failure to do this will result in an
+earned grade of 0.
+
+For all functions below, matrices will be stored as lists of lists where each
+component list represents a column of the matrix. Use of any other
+representation will result in an earned grade of 0.
+
+1) Add a function which takes as it's argument a matrix and implements the
+Householder Orthogonalization algorithm to calculate the QR
+factorization, stored as a list of two matrices Q and R. 
+"""
+
+#Problem 1
+
+def householder_Ortho(matrix_A):
+
+    return
+
+def con_Transpose(matrix_A):
+    result: list[list[float]] = [([0] * (len(matrix_A))) for i in range(len(matrix_A[0]))]
+    for column in range(len(matrix_A)):
+        for row in range(len(matrix_A[0])):
+            result[row][column] = matrix_A[column][row]
+    return result
+
+def matrix_Ident(matrix_A):
+    result: list[list[float]] = [([0] * (len(matrix_A))) for i in range(len(matrix_A[0]))]
+    for element in range(len(matrix_A)):
+        result[element][element] = 1
+    return result
+
+def dia_column(matrix_A, col_Num):
+    result: list[float] = []
+    for element in range((len(matrix_A[col_Num]))-col_Num):
+        result[element] = result.append(0)
+        result[element] = matrix_A[col_Num][element+col_Num]
+    return result
+
+def cal_V(sub_X):
+    e = [1,0,0]
+    x_norm = LA.p_Norm(sub_X)
+    x_e_vector = LA.scalar_vector_Multi(x_norm, e)
+    V = LA.add_vectors(x_e_vector, -sub_X)
+    return V
