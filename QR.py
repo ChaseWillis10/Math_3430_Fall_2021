@@ -1,3 +1,4 @@
+#Homework 5 & 6
 """
 This assignment is due by 11:59pm on 11/05/2021.
 For this assignment you will be updating the python script QR.py from the
@@ -82,7 +83,7 @@ factorization, stored as a list of two matrices Q and R.
 
 #Problem 1
 
-def matrix_con_Transpose(matrix_A):
+def con_Transpose(matrix_A):
     a: complex = 0
     result: list[list[float]] = [([0] * (len(matrix_A))) for i in range(len(matrix_A[0]))]
     for column in range(len(matrix_A)):
@@ -90,16 +91,6 @@ def matrix_con_Transpose(matrix_A):
             a = matrix_A[column][row]
             a = a.real + (a.imag*-1j)
             result[row][column] = a
-    return result
-
-def vector_con_Transpose(vector_A):
-    a: complex = 0
-    result: list[list[float]] = [([0] * (1)) for i in range(len(vector_A))]
-    for column in range(len(vector_A)):
-        a = vector_A[column]
-        a = a.real + (a.imag * -1j)
-        result[column][0] = a
-        print(result)
     return result
 
 def matrix_Ident(matrix_A):
@@ -120,26 +111,60 @@ def cal_V(e_vector, sub_X):
     x_e_vector = LA.scalar_vector_Multi(e_vector, x_norm)
     neg_sub_X = LA.scalar_vector_Multi(sub_X, -1)
     V = LA.add_vectors(x_e_vector, neg_sub_X)
-    return V
+    return [V]
 
-def cal_F(Ident, V):
-    v_Multi = LA.matrix_matrix_Multi(V, vector_con_Transpose(V))
-    v_inner = LA.inner_product_Result(vector_con_Transpose(V),V)
-    scal_matrix = LA.scalar_vector_Multi(v_Multi, (2/v_inner))
-    F = LA.matrix_matrix_Add(Ident, -scal_matrix)
+def cal_F(V):
+    v_transpose = con_Transpose(V)
+    v_Multi = LA.matrix_matrix_Multi(V, v_transpose)
+    Ident = matrix_Ident(v_Multi)
+    v_Inner = LA.inner_product_Result(V[0],V[0])
+    scal_matrix = LA.scalar_matrix_Multi(v_Multi, (2/v_Inner))
+    neg_scal_matrix = LA.scalar_matrix_Multi(scal_matrix, -1)
+    F = LA.matrix_matrix_Add(Ident, neg_scal_matrix)
     return F
+
+def cal_Q(identity_matrix, F, i):
+    Q: list[list[float]] = [([0] * (len(identity_matrix))) for i in range(len(identity_matrix[0]))]
+    for column in range(len(identity_matrix)):
+        for row in range(len(identity_matrix[0])):
+            Q[column][row] = identity_matrix[column][row]
+    for column in range(len(Q) - i):
+        for row in range(len(Q[0]) - i):
+            Q[column + i][row + i] = F[column][row]
+    return Q
+
+def cal_final_Q(Q_List, identity_matrix, R):
+    print(identity_matrix)
+    Q = identity_matrix
+    Q[len(R)-1][len(R)-1] = R[len(R)-1][len(R)-1]
+    Q_List.append(Q)
+    print(Q_List)
+    Q = Q_List[0]
+    for index in range(len(Q_List) - 1):
+        Q = LA.matrix_matrix_Multi(Q, Q_List[index + 1])
+    Q = LA.matrix_matrix_Multi(Q, identity_matrix)
+    return Q
 
 def householder_Ortho(matrix_A):
 
     R: list[list[complex]] = []
+    Q_List = []
     identity_matrix = matrix_Ident(matrix_A)
     for element in matrix_A:
         R.append(element)
     for i in range(len(matrix_A)-1):
+        identity_matrix = matrix_Ident(matrix_A)
+        identity_column = dia_column(identity_matrix, i)
+        print("THIS IS FOR LOOP #", i)
         x: list[complex] = dia_column(R, i)
-        V: list[complex] = cal_V(identity_matrix[i], x)
-        Q: list[list[complex]] = cal_F(identity_matrix, V)
+        V: list[complex] = cal_V(identity_column, x)
+        F: list[list[complex]] = cal_F(V)
+        Q: list[list[complex]] = cal_Q(identity_matrix, F, i)
+        Q_List.append(Q)
         R = LA.matrix_matrix_Multi(Q,R)
-    return R
 
-print(householder_Ortho([[1,1,1],[-1,4,4],[4,-2,2]]))
+    Q = cal_final_Q(Q_List, identity_matrix, R)
+    print("FINISHED")
+    return [Q,R]
+
+print(householder_Ortho([[2,2,1],[-2,1,2],[1,3,1]]))
