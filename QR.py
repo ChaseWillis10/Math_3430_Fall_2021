@@ -83,7 +83,13 @@ factorization, stored as a list of two matrices Q and R.
 
 #Problem 1
 
-def con_Transpose(matrix_A):
+def con_Transpose(matrix_A: list[list[complex]]) -> list[list[complex]]:
+    """Finds the conjugate transpose of matrix_A
+            We 
+                matrix_A: A matrix stored as a list of list with complex and\or normal numbers.
+            Returns:
+                result: The conjugate transpose of matrix_A as a list of list with complex and\or normal numbers.
+        """
     a: complex = 0
     result: list[list[float]] = [([0] * (len(matrix_A))) for i in range(len(matrix_A[0]))]
     for column in range(len(matrix_A)):
@@ -93,37 +99,56 @@ def con_Transpose(matrix_A):
             result[row][column] = a
     return result
 
-def matrix_Ident(matrix_A):
+def matrix_Ident(matrix_A: list[list[complex]]) -> list[list[int]]:
+    """Finds the matrix identity of matrix_A
+            We 
+                matrix_A: A matrix stored as a list of list with complex and\or normal numbers.
+            Returns:
+                result: The matrix identity stored as a list of list.
+        """
     result: list[list[float]] = [([0] * (len(matrix_A))) for i in range(len(matrix_A[0]))]
     for element in range(len(matrix_A)):
         result[element][element] = 1
     return result
 
-def dia_column(matrix_A, col_Num):
+def dia_column(matrix_A: list[list[complex]], col_Num: int) -> list[complex]:
+    """Finds the diagonal column of matrix_A
+            We 
+                matrix_A: A matrix stored as a list of list with complex and\or normal numbers.
+                col_Num: a integer
+            Returns:
+                result: The diagonal column of matrix_A stored as a list of complex numbers.
+        """
     result: list[float] = []
     for element in range((len(matrix_A[col_Num]))-col_Num):
         result[element] = result.append(0)
         result[element] = matrix_A[col_Num][element+col_Num]
     return result
 
-def cal_V(e_vector, sub_X):
-    x_norm = LA.p_Norm(sub_X)
-    x_e_vector = LA.scalar_vector_Multi(e_vector, x_norm)
-    neg_sub_X = LA.scalar_vector_Multi(sub_X, -1)
-    V = LA.add_vectors(x_e_vector, neg_sub_X)
+def cal_V(e_vector: list[int], sub_X: list[complex]) -> list[complex]:
+    """Finds the conjugate transpose of matrix_A
+            We 
+                matrix_A: A matrix stored as a list of list with complex and\or normal numbers.
+            Returns:
+                result: The conjugate transpose of matrix_A as a list of list with complex and\or normal numbers.
+        """
+    x_norm: complex = LA.p_Norm(sub_X)
+    x_e_vector: list[float] = LA.scalar_vector_Multi(e_vector, x_norm)
+    neg_sub_X: list[complex] = LA.scalar_vector_Multi(sub_X, -1)
+    V = list[complex] = LA.add_vectors(x_e_vector, neg_sub_X)
     return [V]
 
-def cal_F(V):
-    v_transpose = con_Transpose(V)
-    v_Multi = LA.matrix_matrix_Multi(V, v_transpose)
-    Ident = matrix_Ident(v_Multi)
-    v_Inner = LA.inner_product_Result(V[0],V[0])
-    scal_matrix = LA.scalar_matrix_Multi(v_Multi, (2/v_Inner))
-    neg_scal_matrix = LA.scalar_matrix_Multi(scal_matrix, -1)
-    F = LA.matrix_matrix_Add(Ident, neg_scal_matrix)
+def cal_F(V: list[complex]) -> list[list[complex]]:
+    v_transpose: list[complex] = con_Transpose(V)
+    v_Multi: list[list[complex]] = LA.matrix_matrix_Multi(V, v_transpose)
+    Ident: list[list[int]] = matrix_Ident(v_Multi)
+    v_Inner: complex = LA.inner_product_Result(V[0],V[0])
+    scal_matrix: list[list[complex]] = LA.scalar_matrix_Multi(v_Multi, (2/v_Inner))
+    neg_scal_matrix: list[list[complex]] = LA.scalar_matrix_Multi(scal_matrix, -1)
+    F: list[list[complex]] = LA.matrix_matrix_Add(Ident, neg_scal_matrix)
     return F
 
-def cal_Q(identity_matrix, F, i):
+def cal_Q(identity_matrix -> list[list[int]], F -> list[list[complex]], i -> int) -> list[list[complex]]:
     Q: list[list[float]] = [([0] * (len(identity_matrix))) for i in range(len(identity_matrix[0]))]
     for column in range(len(identity_matrix)):
         for row in range(len(identity_matrix[0])):
@@ -133,9 +158,9 @@ def cal_Q(identity_matrix, F, i):
             Q[column + i][row + i] = F[column][row]
     return Q
 
-def cal_final_Q(Q_List, identity_matrix, R):
+def cal_final_Q(Q_List: list[list[list[complex]]], identity_matrix: list[list[int]], R: list[list[complex]]) -> list[list[complex]]:
     print(identity_matrix)
-    Q = identity_matrix
+    Q: list[list[complex]] = identity_matrix
     Q[len(R)-1][len(R)-1] = R[len(R)-1][len(R)-1]
     Q_List.append(Q)
     print(Q_List)
@@ -145,17 +170,16 @@ def cal_final_Q(Q_List, identity_matrix, R):
     Q = LA.matrix_matrix_Multi(Q, identity_matrix)
     return Q
 
-def householder_Ortho(matrix_A):
+def householder_Ortho(matrix_A: list[list[complex]]) -> list[list[complex]]:
 
-    R: list[list[complex]] = []
-    Q_List = []
-    identity_matrix = matrix_Ident(matrix_A)
+    R: list[complex] = []
+    Q_List: list[complex] = []
+    identity_matrix : list[list[int]] = matrix_Ident(matrix_A)
     for element in matrix_A:
         R.append(element)
     for i in range(len(matrix_A)-1):
         identity_matrix = matrix_Ident(matrix_A)
-        identity_column = dia_column(identity_matrix, i)
-        print("THIS IS FOR LOOP #", i)
+        identity_column: list[int] = dia_column(identity_matrix, i)
         x: list[complex] = dia_column(R, i)
         V: list[complex] = cal_V(identity_column, x)
         F: list[list[complex]] = cal_F(V)
@@ -164,7 +188,6 @@ def householder_Ortho(matrix_A):
         R = LA.matrix_matrix_Multi(Q,R)
 
     Q = cal_final_Q(Q_List, identity_matrix, R)
-    print("FINISHED")
     return [Q,R]
 
 print(householder_Ortho([[2,2,1],[-2,1,2],[1,3,1]]))
