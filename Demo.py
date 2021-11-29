@@ -151,7 +151,7 @@ a = [[2,2,1],[-2,1,2],[1,3,1]]
 print(QR.householder_Ortho(a))
 print("\n")
 
-print("LS.py contains 1 functions that calculates Least Squares\n")
+print("LS.py contains 1 function that calculates Least Squares\n")
 
 print("First function is least_Squares which will find the least squares of the given matrix and vector.")
 print("Example, if a = [[3,4,0],[-6,-8,1]] and b = [-1,7,2], then least_Squares will return")
