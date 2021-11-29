@@ -52,7 +52,7 @@ print("Hello my name is Chase Willis and my major is in Mathematics. My library 
       " of three\n python files LA.py, QR.py and LS.py each going over different parts of"
       " linear algebra.\n")
 
-print("LA.py contains 10 functions that perform basic linear algebra tasks.\n")
+print("LA.py contains 11 functions that perform basic linear algebra tasks.\n")
 
 print("First function is add_vectors which adds two vectors together.")
 print("Example, if a = [1,1,1] and b = [2,2,2], then add_vectors will return")
