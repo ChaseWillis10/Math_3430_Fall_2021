@@ -23,20 +23,19 @@ def back_Sub(matrix_A: list[list[complex]], vector_B: list[complex]) -> list[com
             from length of matrix_A - 2, -1, -1. Create a variable name temp and store vector_B[current} in the variable
             It will then start another for loop using a variable named index that will range from length fo result.
             Inside this for loop we will overwrite temp with temp - solution. Index for loop will end and it will then
-            overwrite temp again with 1/ coefficent of the variable we are solving for. We will then append temp into
-            result and then return result. 
+            overwrite temp again with 1/ coefficient of the variable we are solving for. We will then append temp into
+            result and then return result.
             Args:
                 matrix_A: A matrix stored as a list of list with complex and\or normal numbers.
                 vector_A: A vector stored as a list of complex and\or normal numbers.
             Returns:
                 result: The least squares of the input variables stored as a list.
             """
-    result: list = []
-    result.append((vector_B[len(vector_B) - 1]) * (1/(matrix_A[len(matrix_A)-1][len(matrix_A[0])-1])))
+    result: list = [vector_B[-1] * (1/(matrix_A[-1][-1]))]
     for current in range(len(matrix_A) - 2, -1, -1):
         temp: float = vector_B[current]
         for index in range(len(result)):
-            temp -= matrix_A[len(matrix_A) - 1 - index][current] * result[current]
+            temp -= matrix_A[len(matrix_A) - 1 - index][current] * result[index]
         temp *= 1/(matrix_A[current][current])
         result.append(temp)
     result = result[::-1]
@@ -65,3 +64,4 @@ def least_Squares(matrix_A: list[list[complex]], vector_A: list[complex]) -> lis
     Multi: list[complex] = LA.matrix_vector_Multi(con_trans_Q,vector_A)
     result: list[complex] = back_Sub(R, Multi)
     return result
+
