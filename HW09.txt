@@ -1,0 +1,16 @@
+Question 01) Recently we discussed floating point arithmetic, which has become
+the standard way of representing numbers on a computer. One of the key aspects
+of floating point numbers is that the gap between a number and it's floating
+point representation increases with the magnitude of the number. 
+This differs from what is called a "fixed
+point" representation, where the gap is constant. 
+
+What is an advantage or disadvantage to using floating point instead of fixed
+point?
+
+The first of two main advantages that floating point has over fixed point is that floating point can
+represent values between integers. This is important for getting a much closer correct answer then fixed
+point. The second advantage that floating point has is that since they can represent values between
+integers then they have a greater range of values that can be represented which is also important for
+getting a closer correct answer. However, there is also disadvantages of using floatin point and the
+main issue is that over calculations you can start to lose precision.
